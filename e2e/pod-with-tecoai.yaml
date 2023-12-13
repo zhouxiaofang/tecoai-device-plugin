@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tecoai-pod
+  labels:
+    name: tecoai-pod
+spec:
+  containers:
+  - name: tecoai-pod
+    image: nginx:1.14.2
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "500m"
+        swai.com/tecoai: 1
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+        swai.com/tecoai: 1
+    ports:
+      - containerPort: 70
+    volumeMounts:   #卷挂载
+    - name: teco-volume  #挂载卷的名称
+      mountPath: /opt/tecoai  #挂载到容器中的位置
+    - name: tecoai-volume  #挂载卷的名称
+      mountPath: /dev  #挂载到容器中的位置
+  volumes:
+  - name: teco-volume
+    hostPath:
+      path: /opt/tecoai
+  - name: tecoai-volume
+    hostPath:
+      path: /dev
